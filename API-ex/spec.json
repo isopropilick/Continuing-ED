@@ -1,0 +1,130 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Simple Number Generator and Calculator API",
+    "version": "1.0.0",
+    "description": "An API to generate number lists and perform basic arithmetic operations."
+  },
+  "paths": {
+    "/numbers": {
+      "get": {
+        "summary": "Generate a list of numbers",
+        "parameters": [
+          {
+            "name": "min",
+            "in": "query",
+            "description": "Minimum number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "max",
+            "in": "query",
+            "description": "Maximum number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of numbers (int, float, prime)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["int", "float", "prime"],
+              "default": "int"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of numbers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calculator": {
+      "get": {
+        "summary": "Perform a basic arithmetic operation",
+        "parameters": [
+          {
+            "name": "operation",
+            "in": "query",
+            "description": "Arithmetic operation to perform (add, subtract, multiply, divide)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["add", "subtract", "multiply", "divide"]
+            }
+          },
+          {
+            "name": "num1",
+            "in": "query",
+            "description": "First number",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "num2",
+            "in": "query",
+            "description": "Second number",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The result of the arithmetic operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid operation or divide by zero error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
